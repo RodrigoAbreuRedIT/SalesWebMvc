@@ -8,35 +8,28 @@ using Microsoft.EntityFrameworkCore;
 using SalesWebMvc.Data;
 using SalesWebMvc.Models;
 
-namespace SalesWebMvc.Controllers
-{
-    public class DepartmentsController : Controller
-    {
+namespace SalesWebMvc.Controllers {
+    public class DepartmentsController : Controller {
         private readonly SalesWebMvcContext _context;
 
-        public DepartmentsController(SalesWebMvcContext context)
-        {
+        public DepartmentsController(SalesWebMvcContext context) {
             _context = context;
         }
 
         // GET: Departments
-        public async Task<IActionResult> Index()
-        {
+        public async Task<IActionResult> Index() {
             return View(await _context.Department.ToListAsync());
         }
 
         // GET: Departments/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
+        public async Task<IActionResult> Details(int? id) {
+            if (id == null) {
                 return NotFound();
             }
 
             var department = await _context.Department
                 .FirstOrDefaultAsync(m => m.id == id);
-            if (department == null)
-            {
+            if (department == null) {
                 return NotFound();
             }
 
@@ -44,8 +37,7 @@ namespace SalesWebMvc.Controllers
         }
 
         // GET: Departments/Create
-        public IActionResult Create()
-        {
+        public IActionResult Create() {
             return View();
         }
 
@@ -54,10 +46,8 @@ namespace SalesWebMvc.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("id,name")] Department department)
-        {
-            if (ModelState.IsValid)
-            {
+        public async Task<IActionResult> Create([Bind("id,name")] Department department) {
+            if (ModelState.IsValid) {
                 _context.Add(department);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -66,16 +56,13 @@ namespace SalesWebMvc.Controllers
         }
 
         // GET: Departments/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
+        public async Task<IActionResult> Edit(int? id) {
+            if (id == null) {
                 return NotFound();
             }
 
             var department = await _context.Department.FindAsync(id);
-            if (department == null)
-            {
+            if (department == null) {
                 return NotFound();
             }
             return View(department);
@@ -86,28 +73,21 @@ namespace SalesWebMvc.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("id,name")] Department department)
-        {
-            if (id != department.id)
-            {
+        public async Task<IActionResult> Edit(int id, [Bind("id,name")] Department department) {
+            if (id != department.id) {
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
+            if (ModelState.IsValid) {
+                try {
                     _context.Update(department);
                     await _context.SaveChangesAsync();
                 }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!DepartmentExists(department.id))
-                    {
+                catch (DbUpdateConcurrencyException) {
+                    if (!DepartmentExists(department.id)) {
                         return NotFound();
                     }
-                    else
-                    {
+                    else {
                         throw;
                     }
                 }
@@ -117,17 +97,14 @@ namespace SalesWebMvc.Controllers
         }
 
         // GET: Departments/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
+        public async Task<IActionResult> Delete(int? id) {
+            if (id == null) {
                 return NotFound();
             }
 
             var department = await _context.Department
                 .FirstOrDefaultAsync(m => m.id == id);
-            if (department == null)
-            {
+            if (department == null) {
                 return NotFound();
             }
 
@@ -137,16 +114,14 @@ namespace SalesWebMvc.Controllers
         // POST: Departments/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
+        public async Task<IActionResult> DeleteConfirmed(int id) {
             var department = await _context.Department.FindAsync(id);
             _context.Department.Remove(department);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool DepartmentExists(int id)
-        {
+        private bool DepartmentExists(int id) {
             return _context.Department.Any(e => e.id == id);
         }
     }
