@@ -9,6 +9,7 @@ namespace SalesWebMvc.Models {
         public string email { get; set; }
         public DateTime birthDate { get; set; }
         public double baseSalary { get; set; }
+        public int DepartmentId { get; set; }
         public Department department { get; set; }
         public ICollection<SalesRecord> sales { get; set; } = new List<SalesRecord>();
 
