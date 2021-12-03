@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using SalesWebMvc.Data;
 using SalesWebMvc.Models;
 
@@ -23,7 +23,8 @@ namespace SalesWebMvc.Services {
         }
 
         public Seller FindById(int id) {
-            return this._context.Seller.FirstOrDefault(obj => obj.id == id);
+            // instruçao com join, para juntar as tabelas dos sellers com as dos departamentos
+            return this._context.Seller.Include(obj => obj.department).FirstOrDefault(obj => obj.id == id);
         }
 
         public void Remove(int id) {
